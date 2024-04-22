@@ -101,4 +101,9 @@ class ClientController extends Controller
 
     return $this->index();
   }
+
+  public function sms()
+  {
+    return 'ok';
+  }
 }

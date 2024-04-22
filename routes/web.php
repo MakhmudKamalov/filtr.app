@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\ClientController;
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\KlientController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +16,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/',);
+Route::redirect('/', '/klients');
+
+Route::resource('klients', KlientController::class);
+Route::get('klients/{klient}/add', [KlientController::class, 'add'])->name('klients.add');
+Route::post('klients/storeAdd', [KlientController::class, 'storeAdd'])->name('klients.storeAdd');

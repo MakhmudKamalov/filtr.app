@@ -16,8 +16,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+  return $request->user();
 });
 
 
 Route::resource('clients', ClientController::class);
+Route::get('/clients/month/clients', [ClientController::class, 'sms'])->name('clients.sms');
