@@ -2,17 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Filtr;
+use App\Models\History;
 use Illuminate\Http\Request;
 
-class FiltrController extends Controller
+class HistoryController extends Controller
 {
   /**
    * Display a listing of the resource.
    */
   public function index()
   {
-    //
+    $history = History::all();
+
+    return view('history', compact('history'));
   }
 
   /**
@@ -20,8 +22,7 @@ class FiltrController extends Controller
    */
   public function create()
   {
-    $filtrs = Filtr::all();
-    return view('create_filtr', compact('filtrs'));
+    //
   }
 
   /**
@@ -29,21 +30,7 @@ class FiltrController extends Controller
    */
   public function store(Request $request)
   {
-
-    $validate = $request->validate([
-      'name' => 'required',
-      'month' => 'required',
-      'price' => 'required',
-    ]);
-
-
-    Filtr::create([
-      'name' => $validate['name'],
-      'month' => $validate['month'],
-      'price' => $validate['price'],
-    ]);
-
-    return $this->create();
+    //
   }
 
   /**
@@ -73,10 +60,8 @@ class FiltrController extends Controller
   /**
    * Remove the specified resource from storage.
    */
-  public function destroy($id)
+  public function destroy(string $id)
   {
-    Filtr::destroy($id);
-
-    return $this->create();
+    //
   }
 }

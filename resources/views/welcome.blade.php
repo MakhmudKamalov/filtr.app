@@ -8,7 +8,9 @@
 </head>
 <body>
   <h1>Home page</h1>
-<a href="{{ Route('klients.create') }}">Create client</a>
+<a href="{{ Route('klients.create') }}">Create client</a><br><br>
+<a href="{{ Route('filtrs.create') }}">Create filtr</a><br><br>
+<a href="{{ Route('histories.index') }}">Hisrory</a>
 <br><br><hr>
 <table border="">
   <tr>

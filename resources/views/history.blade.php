@@ -7,14 +7,15 @@
   <title>Document</title>
 </head>
 <body>
-  <h1>{{ $data['surname'].' '.$data['name'] }}</h1>
-  <h3>{{ $data['phone'] }}</h3>
+  <h1>All Histories</h1>
   <a href="{{ Route('klients.index') }}">Back</a>
   <hr>
   <table border="">
     <tr>
       <th>№</th>
-      <th>Name</th>
+      <th>FIO</th>
+      <th>Phone</th>
+      <th>Filtr</th>
       <th>Month</th>
       <th>Price</th>
       <th>Date</th>
@@ -22,15 +23,17 @@
     @php
       $i = 1;
     @endphp
-      @foreach ($data['filtr'] as $v)
+      @foreach ($history as $v)
         <tr>
           <td>{{ $i++ }}</td>
-          <td>{{ $v['name'] }}</td>
+          <td>{{ $v['name'].' '.$v['surname'] }}</td>
+          <td>{{ $v['phone'] }}</td>
+          <td>{{ $v['filtr'] }}</td>
           <td>{{ $v['month'] }}</td>
           <td>{{ $v['price'] }}</td>
           <td>{{ $v['created_at'] }}</td>
         </tr>      
       @endforeach
     </table>
-</body>
+  </body>
 </html>

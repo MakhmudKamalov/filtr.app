@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Client;
 use App\Models\Filtr;
+use App\Models\History;
 use App\Models\Zakaz;
 use GuzzleHttp\Promise\Create;
 use Illuminate\Http\Request;
@@ -49,9 +50,11 @@ class KlientController extends Controller
     $validate = $request->validate([
       'name' => 'required',
       'surname' => 'required',
-      'phone' => 'required',
+      'phone' => 'required|unique:clients',
       'filtr' => 'required',
     ]);
+
+    $filtr = Filtr::find($validate['filtr']);
 
     $client = Client::create([
       'name' => $validate['name'],
@@ -59,8 +62,14 @@ class KlientController extends Controller
       'phone' => $validate['phone'],
     ]);
 
-
-
+    History::create([
+      'name' => $validate['name'],
+      'surname' => $validate['surname'],
+      'phone' => $validate['phone'],
+      'filtr' => $filtr['name'],
+      'month' => $filtr['month'],
+      'price' => $filtr['price'],
+    ]);
 
     Zakaz::create([
       'client_id' =>  $client->id,
@@ -83,6 +92,7 @@ class KlientController extends Controller
       $filtr[] = [
         'name' => Filtr::find($z['filtr_id'])->name,
         'month' => Filtr::find($z['filtr_id'])->month,
+        'price' => Filtr::find($z['filtr_id'])->price,
         'created_at' => $z['created_at'],
       ];
     }
@@ -161,10 +171,26 @@ class KlientController extends Controller
 
   public function storeAdd(Request $request)
   {
+    $validate = $request->validate([
+      'filtr' => 'required'
+    ]);
+
+    $client = Client::find($request->id);
+
+    $filtr = Filtr::find($request->filtr);
 
     Zakaz::create([
       'client_id' =>  $request->id,
       'filtr_id' => $request->filtr,
+    ]);
+
+    History::create([
+      'name' => $client['name'],
+      'surname' => $client['surname'],
+      'phone' => $client['phone'],
+      'filtr' => $filtr['name'],
+      'month' => $filtr['month'],
+      'price' => $filtr['price'],
     ]);
 
     return $this->add($request->id);
